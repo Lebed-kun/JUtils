@@ -1,0 +1,1 @@
+The function can keep results of heavy calculation in short memory. This only works for function with 1 number or string argument. To make memoization work for function with multiple arguments, you should use currying of function or hashing arguments
