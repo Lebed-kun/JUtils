@@ -1,19 +1,14 @@
-type Key = number | string | symbol;
-
 export class Map {
-  private _map: object;
-  private _count: number;
-
-  constructor(obj: object) {
+  constructor(obj) {
     this._map = obj;
     this._count = Object.keys(obj).length;
   }
 
-  private _withThisArg(callback: Function, thisArg?: object): Function {
+  _withThisArg(callback, thisArg) {
     return typeof thisArg !== "undefined" ? callback.bind(thisArg) : callback;
   }
 
-  getValue(key): any {
+  getValue(key) {
     return this._map[key];
   }
 
@@ -38,7 +33,7 @@ export class Map {
     return this._count;
   }
 
-  forEach(callback: Function, thisArg?: object) {
+  forEach(callback, thisArg) {
     const bindCallback = this._withThisArg(callback, thisArg);
 
     for (let key in this._map) {
@@ -46,7 +41,7 @@ export class Map {
     }
   }
 
-  map(transform: Function, thisArg?: object): Map {
+  map(transform, thisArg) {
     const newObj = {};
     const bindTransform = this._withThisArg(transform, thisArg);
 
@@ -57,7 +52,7 @@ export class Map {
     return new Map(newObj);
   }
 
-  filter(condition: Function, thisArg?: object): Map {
+  filter(condition, thisArg) {
     const newObj = {};
     const bindCondition = this._withThisArg(condition, thisArg);
 
@@ -70,7 +65,7 @@ export class Map {
     return new Map(newObj);
   }
 
-  reduce(transform: Function, initialValue, thisArg?: object): any {
+  reduce(transform, initialValue, thisArg) {
     let accumulator = initialValue;
     const bindTransform = this._withThisArg(transform, thisArg);
 
@@ -81,7 +76,7 @@ export class Map {
     return accumulator;
   }
 
-  find(condition: Function, thisArg?: object): any {
+  find(condition, thisArg) {
     const bindCondition = this._withThisArg(condition, thisArg);
 
     for (let key in this._map) {
@@ -91,5 +86,13 @@ export class Map {
     return undefined;
   }
 
-  findKey(condition: Function, thisArg?: object): Key {}
+  findKey(condition, thisArg) {
+    const bindCondition = this._withThisArg(condition, thisArg);
+
+    for (let key in this._map) {
+      if (bindCondition(this._map[key], key, this)) return key;
+    }
+
+    return undefined;
+  }
 }
