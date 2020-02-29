@@ -8,11 +8,7 @@ import Router from "./Router";
  * @param  {...Route} routes
  * @returns {(context ?: Object) => any}
  */
-const ClientRouter = (...routes) =>
-  Router.apply(null, routes).bind(
-    null,
-    window.location.pathname,
-    window.location.search
-  );
+const ClientRouter = (...routes) => context =>
+  Router(...routes)(window.location.pathname, window.location.search, context);
 
 export default ClientRouter;
