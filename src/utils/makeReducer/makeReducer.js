@@ -1,6 +1,6 @@
 /**
  *
- * @param {Array<(S, A) => S>} reducers
+ * @param {Object<string|number|symbol, (S, A) => S>} reducers
  * @returns {(S, A) => S}
  */
 const makeReducer = reducers => (state, action) => {
